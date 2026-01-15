@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天 - CAN-Chat</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 左侧边栏 - 频道列表 -->
+        <aside class="sidebar">
+            <!-- 顶部导航 -->
+            <div class="sidebar-header">
+                <h2 class="logo">CAN-Chat</h2>
+                <div class="user-info">
+                    <span id="current-username" class="username"></span>
+                    <div class="user-actions">
+                        <a href="/profile" class="action-link">资料</a>
+                        <button id="logout-btn" class="action-btn">退出</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 频道搜索和创建 -->
+            <div class="channel-actions">
+                <div class="search-box">
+                    <input type="text" id="channel-search" placeholder="搜索频道..." class="search-input">
+                    <button id="search-btn" class="search-btn">搜索</button>
+                </div>
+                <button id="create-channel-btn" class="btn btn-primary btn-sm">创建频道</button>
+            </div>
+            
+            <!-- 频道列表 -->
+            <div class="channel-tabs">
+                <button class="tab-btn active" data-tab="joined">已加入频道</button>
+                <button class="tab-btn" data-tab="public">公开频道</button>
+            </div>
+            
+            <div class="channel-lists">
+                <!-- 已加入频道列表 -->
+                <div class="channel-list active" id="joined-channels">
+                    <div class="channel-list-header">
+                        <h3>已加入频道</h3>
+                    </div>
+                    <div class="channels" id="joined-channels-list">
+                        <!-- 频道项将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+                
+                <!-- 公开频道列表 -->
+                <div class="channel-list" id="public-channels">
+                    <div class="channel-list-header">
+                        <h3>公开频道</h3>
+                    </div>
+                    <div class="channels" id="public-channels-list">
+                        <!-- 频道项将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 右侧主内容 - 聊天区域 -->
+        <main class="chat-main">
+            <!-- 频道头部 -->
+            <header class="chat-header">
+                <h3 id="current-channel-name">选择一个频道开始聊天</h3>
+                <p id="current-channel-description" class="channel-description"></p>
+                <div class="channel-info">
+                    <span id="channel-user-count" class="user-count"></span>
+                    <button id="channel-action-btn" class="btn btn-secondary btn-sm"></button>
+                </div>
+            </header>
+            
+            <!-- 消息区域 -->
+            <div class="messages-container" id="messages-container">
+                <div class="messages" id="messages">
+                    <!-- 消息将通过JavaScript动态添加 -->
+                </div>
+            </div>
+            
+            <!-- 消息输入区域 -->
+            <footer class="chat-footer">
+                <form id="message-form" class="message-form">
+                    <input type="text" id="message-input" placeholder="输入消息..." class="message-input" disabled>
+                    <input type="file" id="image-input" accept="image/*" style="display: none;">
+                    <button type="button" id="image-btn" class="btn btn-secondary" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M14.002 4.008a6 6 0 0 1-1.522 2.485c-.506.542-.982 1.087-1.395 1.668-.592.885-1.39 1.57-2.185 2.185a4.2 4.2 0 0 1-.878.525A6.001 6.001 0 0 1 2 16a6 6 0 0 1 6-6c1.39 0 2.71-.51 3.735-1.395 1.582-.793 2.325-1.969 2.863-3.428A6 6 0 0 1 16 2c0-.401-.053-.777-.14-1.135a3.5 3.5 0 0 0-.993-1.31c-.992-.72-2.192-1.172-3.38-1.172-.904 0-1.78.29-2.528.81C7.706 1.999 7 2.728 7 3.556a.5.5 0 0 1-.5.5c-.83 0-1.522-.276-2.083-.71-.664-.55-.978-1.407-.978-2.319A3.5 3.5 0 0 1 5.5 0h3a.5.5 0 0 1 .5.5c0 .912-.302 1.768-.867 2.465l.002.002h3.001z"/>
+                            <path d="M10.647 6.896a.5.5 0 0 0-.646.352l-.008.011-.005.003-.002.001a4.892 4.892 0 0 0-.013.029l-.005.006-.003.004-.001.001-.001.001a.5.5 0 0 0 .364.646l.002-.001.004-.002.006-.003.012-.005.029-.013.003-.002.001-.001a.5.5 0 0 0 .352-.646l-.001-.002-.004-.006-.006-.005-.012-.011-.029-.013z"/>
+                        </svg>
+                    </button>
+                    <button type="submit" id="send-btn" class="btn btn-primary" disabled>发送</button>
+                </form>
+            </footer>
+        </main>
+        
+        <!-- 创建频道模态框 -->
+        <div id="create-channel-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>创建新频道</h3>
+                    <button id="close-modal" class="close-btn">&times;</button>
+                </div>
+                <form id="create-channel-form" class="modal-form">
+                    <div class="form-group">
+                        <label for="channel-name" class="form-label">频道名称</label>
+                        <input type="text" id="channel-name" name="name" class="form-input" placeholder="请输入频道名称" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="channel-description" class="form-label">频道描述</label>
+                        <textarea id="channel-description" name="description" class="form-textarea" placeholder="请输入频道描述" rows="3"></textarea>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" id="channel-private" name="is_private" class="form-check-input">
+                        <label for="channel-private" class="form-check-label">设为私有频道</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">创建频道</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

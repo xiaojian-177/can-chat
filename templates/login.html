@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - CAN-Chat</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">CAN-Chat</h1>
+            <nav class="nav">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/register" class="nav-link">注册</a>
+            </nav>
+        </header>
+        
+        <main class="main">
+            <section class="auth-section">
+                <div class="auth-card">
+                    <h2 class="auth-title">登录</h2>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="username" class="form-label">用户名</label>
+                            <input type="text" id="username" name="username" class="form-input" placeholder="请输入用户名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="请输入密码" required>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" id="remember" name="remember" class="form-check-input">
+                            <label for="remember" class="form-check-label">自动登录</label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">登录</button>
+                        </div>
+                        <div class="auth-links">
+                            <p>还没有账号？<a href="/register">立即注册</a></p>
+                        </div>
+                    </form>
+                    <div id="login-error" class="error-message"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2026 CAN-Chat. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>
