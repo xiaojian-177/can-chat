@@ -217,8 +217,8 @@ can-chat/
 
 如果您有任何问题或建议，欢迎联系我们：
 
-- 邮箱: your-email@example.com
-- GitHub: [yourusername](https://github.com/yourusername)
+- 邮箱: 729166551@qq.com
+- GitHub: [xiaojian-177](https://github.com/xiaojian-177)
 
 ---
 
